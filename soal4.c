@@ -22,19 +22,25 @@ int main()
             }
 	    pthread_join(tid[i],NULL);
 	}
+	for (i=0;i<2;i++)
+	{
+	   printf("%d\n",input[i]);
+	}
 }
 
 void *faktorial( void *ptr )
 {
-     int i,result;
-     result=i=1;
-     int *x = (int *) ptr;
-	printf ("%d",*x);
+     	int i,result;
+     	result=i=1;
+	int *x = (int *) ptr;
+//	printf ("%d",*x);
 
 	while (i<=(*x)) {
 		result*=i;
 		i++;
 	}
+	*x = result;
+
 	return NULL;
 	//printf ("hasil %d ! = %d",num1,result);
 }
