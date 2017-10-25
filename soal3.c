@@ -11,7 +11,7 @@ pthread_t tid[2];
 
 void* hewan(void *arg)
 {
-    if(pthread_equal(id,tid[0]))
+    if (pthread_equal(id,tid[0]))
     {
 	while (lohan>0&&lohan<=100)
 	{
@@ -23,5 +23,16 @@ void* hewan(void *arg)
 	flag=1;
     }
 
+    else if (pthread_equal(id,tid[1]))
+    {
+	while (kepiting>0&&kepiting<=100)
+	{
+	    printf("Status kepiting: %d\n");
+	    sleep(20);
+	    kepiting-=10;
+	}
+	printf("Kepiting mati\n");
+	flag=1;
+    }
 
 }
