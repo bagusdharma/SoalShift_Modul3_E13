@@ -8,55 +8,37 @@
 int flag=0;
 int lohan=100;
 int kepiting=100;
-pthread_t tid[2];
+pthread_t tid1,tid2;
 
-void* hewan(void *arg)
+void* fungsilohan(void *arg)
 {
-    pthread_t id=pthread_self();
-    if (pthread_equal(id,tid[0]))
+    while (lohan>0&&lohan<=100)
     {
-	while (lohan>0&&lohan<=100)
-	{
-	    printf("Status lohan: %d\n",lohan);
-	    sleep(10);
-	    lohan-=15;
-	}
-	printf("Lohan mati\n");
-	flag=1;
+	printf("Status lohan: %d\n",lohan);
+	sleep(10);
+	lohan-=15;
     }
-
-    else if (pthread_equal(id,tid[1]))
-    {
-	while (kepiting>0&&kepiting<=100)
-	{
-	    printf("Status kepiting: %d\n",kepiting);
-	    sleep(20);
-	    kepiting-=10;
-	}
-	printf("Kepiting mati\n");
-	flag=1;
-    }
-
+    printf("Lohan mati\n");
+    flag=1;
 }
 
-int main(void)
+void* fungsikepiting(void *arg)
 {
-    int i=0;
-    int err;
-    while(i<2)//looping membuat thread 2x
+    while (kepiting>0&&kepiting<=100)
     {
-        err=pthread_create(&(tid[i]),NULL,&hewan,NULL);//membuat thread
-        if(err!=0)//cek error
-        {
-            printf("\n can't create thread : [%s]",strerror(err));
-        }
-        else
-        {
-            printf("\n create thread success");
-        }
-        i++;
+	printf("Status kepiting: %d\n",kepiting);
+	sleep(20);
+	kepiting-=10;
     }
-    pthread_join(tid[0],NULL);
-    pthread_join(tid[1],NULL);
-    return 0;
+    printf("Kepiting mati\n");
+    flag=1;
+}
+
+int main()
+{
+    pthread_create(&(tid1),NULL,&fungsilohan,NULL);
+    pthread_create(&(tid2),NULL,&fungsikepiting,NULL);
+
+    pthread_join(tid1,NULL);
+    pthread_join(tid2,NULL);
 }
